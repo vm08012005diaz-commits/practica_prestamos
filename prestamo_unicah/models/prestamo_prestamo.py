@@ -1,4 +1,4 @@
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class PrestamoPrestamo(models.Model):
@@ -31,3 +31,27 @@ class PrestamoPrestamo(models.Model):
         default="borrador",
         tracking=True,
     )
+    linea_ids = fields.One2many(
+        "prestamo.linea", "prestamo_id", string="Equipos"
+    )
+    cantidad_equipos = fields.Integer(
+        string="Cantidad de equipos", compute="_compute_cantidad_equipos", store=True
+    )
+    dias_prestamo = fields.Integer(
+        string="Días de préstamo", compute="_compute_dias_prestamo", store=True
+    )
+
+    @api.depends("linea_ids")
+    def _compute_cantidad_equipos(self):
+        for prestamo in self:
+            prestamo.cantidad_equipos = len(prestamo.linea_ids)
+
+    @api.depends("fecha_prestamo", "fecha_devolucion")
+    def _compute_dias_prestamo(self):
+        for prestamo in self:
+            if prestamo.fecha_prestamo and prestamo.fecha_devolucion:
+                prestamo.dias_prestamo = (
+                    prestamo.fecha_devolucion - prestamo.fecha_prestamo
+                ).days
+            else:
+                prestamo.dias_prestamo = 0

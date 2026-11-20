@@ -20,3 +20,8 @@ Las respuestas de cada paso se documentan en este archivo conforme avanza la pr�
 1. `_name = "prestamo.prestamo"` crea un modelo y una tabla propios. `_inherit = ["mail.thread"]` añade a ese modelo las capacidades del chatter y el seguimiento de cambios, sin sustituir su identidad.
 2. `tracking=True` registra en el chatter los cambios del campo `state`, indicando el valor anterior, el nuevo valor, el usuario y la fecha.
 
+### Paso 3. Equipos del préstamo
+
+1. En `fields.One2many("prestamo.linea", "prestamo_id")`, el primer parámetro es el modelo relacionado y el segundo es el campo `Many2one` de ese modelo que apunta al préstamo actual.
+2. Al borrar un préstamo se borran también sus líneas. Lo define `ondelete="cascade"` en el campo `prestamo_id` de `prestamo.linea`.
+
