@@ -25,3 +25,8 @@ Las respuestas de cada paso se documentan en este archivo conforme avanza la pr�
 1. En `fields.One2many("prestamo.linea", "prestamo_id")`, el primer parámetro es el modelo relacionado y el segundo es el campo `Many2one` de ese modelo que apunta al préstamo actual.
 2. Al borrar un préstamo se borran también sus líneas. Lo define `ondelete="cascade"` en el campo `prestamo_id` de `prestamo.linea`.
 
+### Paso 4. Flujo de estados
+
+1. La visibilidad de un botón es solo una regla de interfaz y puede evitarse mediante RPC, automatizaciones o llamadas directas al método. La validación del servidor protege la integridad de los datos sin importar desde dónde se invoque la acción.
+2. `prestamo.linea_ids.equipo_id.write(...)` encadena conjuntos de registros: obtiene todas las líneas, mapea sus `equipo_id` y ejecuta una escritura por lote sobre el recordset resultante. Por eso no hace falta un `for` por equipo.
+
