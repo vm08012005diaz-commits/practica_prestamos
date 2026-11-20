@@ -14,6 +14,27 @@
         </field>
     </record>
 
+    <record id="prestamo_prestamo_view_search" model="ir.ui.view">
+        <field name="name">prestamo.prestamo.search</field>
+        <field name="model">prestamo.prestamo</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <filter name="activos" string="Activos"
+                        domain="[('state', 'in', ('prestado', 'atrasado'))]"/>
+                <filter name="atrasados" string="Atrasados"
+                        domain="[('state', '=', 'atrasado')]"/>
+                <group>
+                    <filter name="group_state" string="Estado"
+                            context="{'group_by': 'state'}"/>
+                    <filter name="group_partner" string="Solicitante"
+                            context="{'group_by': 'partner_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
     <record id="prestamo_prestamo_view_form" model="ir.ui.view">
         <field name="name">prestamo.prestamo.form</field>
         <field name="model">prestamo.prestamo</field>

@@ -35,3 +35,8 @@ Las respuestas de cada paso se documentan en este archivo conforme avanza la pr�
 1. El dominio de `equipo_id` mejora la selección en la interfaz, pero no es una barrera de integridad: el estado puede cambiar después de elegir el equipo o el dato puede llegar por importación, API o código. El TODO 5 vuelve a comprobar el estado justo antes de prestar.
 2. Un método con `@api.constrains` se ejecuta al crear o escribir un registro cuando cambia alguno de los campos declarados, y bloquea el guardado si lanza `ValidationError`. La validación de `action_prestar` se ejecuta únicamente al invocar esa acción, justo antes del cambio de estado y de los equipos.
 
+### Paso 6. Contacto, kanban y búsqueda
+
+1. Al arrastrar una tarjeta a otra columna, Odoo escribe en el campo `estado` el valor del nuevo grupo porque el kanban está agrupado por ese campo. Ese cambio directo no ejecuta los botones del flujo; por eso no debe usarse para sustituir las acciones **Prestar** y **Devolver**, que contienen validaciones y sincronizan los equipos.
+2. No se crea una columna nueva en `res_partner`. Un `One2many` es una relación inversa virtual: utiliza la columna `partner_id` que ya existe en la tabla de `prestamo.prestamo` para encontrar los préstamos del contacto.
+

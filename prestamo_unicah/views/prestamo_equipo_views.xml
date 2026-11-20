@@ -13,6 +13,22 @@
         </field>
     </record>
 
+    <record id="prestamo_equipo_view_kanban" model="ir.ui.view">
+        <field name="name">prestamo.equipo.kanban</field>
+        <field name="model">prestamo.equipo</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="estado">
+                <templates>
+                    <t t-name="card">
+                        <div class="fw-bold"><field name="name"/></div>
+                        <div><field name="codigo"/></div>
+                        <div><field name="categoria"/></div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
     <record id="prestamo_equipo_view_form" model="ir.ui.view">
         <field name="name">prestamo.equipo.form</field>
         <field name="model">prestamo.equipo</field>
@@ -39,7 +55,7 @@
     <record id="prestamo_equipo_action" model="ir.actions.act_window">
         <field name="name">Equipos</field>
         <field name="res_model">prestamo.equipo</field>
-        <field name="view_mode">list,form</field>
+        <field name="view_mode">kanban,list,form</field>
     </record>
 
     <menuitem id="prestamo_menu_root" name="Préstamos" sequence="60"/>

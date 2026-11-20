@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_partner_form_prestamo_unicah" model="ir.ui.view">
+        <field name="name">res.partner.form.prestamo.unicah</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Préstamos" name="prestamos">
+                    <field name="prestamo_ids" readonly="1">
+                        <list>
+                            <field name="name"/>
+                            <field name="fecha_prestamo"/>
+                            <field name="fecha_devolucion"/>
+                            <field name="state" widget="badge"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
