@@ -46,3 +46,7 @@ Las respuestas de cada paso se documentan en este archivo conforme avanza la pr�
 
 Agregué el botón **Marcar atrasado**, visible solamente cuando el préstamo está Prestado. Antes de cambiar el estado comparo la fecha de devolución con la fecha actual mediante `fields.Date.context_today(self)`. Si la fecha todavía no ha pasado, muestro un `UserError`; si ya pasó, cambio el estado a Atrasado y dejo constancia en el chatter.
 
+### 2. Colores en la lista
+
+Agregué `decoration-danger` para mostrar en rojo los préstamos Atrasados y `decoration-muted` para mostrar en gris los Devueltos. Las expresiones dependen directamente del campo `state` de cada fila.
+

@@ -4,7 +4,8 @@
         <field name="name">prestamo.prestamo.list</field>
         <field name="model">prestamo.prestamo</field>
         <field name="arch" type="xml">
-            <list>
+            <list decoration-danger="state == 'atrasado'"
+                  decoration-muted="state == 'devuelto'">
                 <field name="name"/>
                 <field name="partner_id"/>
                 <field name="fecha_prestamo"/>
