@@ -10,3 +10,8 @@ Este repositorio contiene el módulo `prestamo_unicah`, desarrollado paso a paso
 
 Las respuestas de cada paso se documentan en este archivo conforme avanza la práctica.
 
+### Paso 1. Catálogo de equipos
+
+1. Al desmarcar **Activo**, el registro se archiva: sigue en la base de datos, pero las vistas normales lo ocultan mediante el filtro implícito de registros activos. Es mejor que borrarlo porque conserva el historial y las relaciones del equipo.
+2. `copy=False` evita que el código de inventario se copie al duplicar un equipo. Así, el nuevo registro no hereda un identificador que debe ser único para cada activo.
+
