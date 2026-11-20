@@ -15,3 +15,8 @@ Las respuestas de cada paso se documentan en este archivo conforme avanza la pr�
 1. Al desmarcar **Activo**, el registro se archiva: sigue en la base de datos, pero las vistas normales lo ocultan mediante el filtro implícito de registros activos. Es mejor que borrarlo porque conserva el historial y las relaciones del equipo.
 2. `copy=False` evita que el código de inventario se copie al duplicar un equipo. Así, el nuevo registro no hereda un identificador que debe ser único para cada activo.
 
+### Paso 2. Registro de préstamos
+
+1. `_name = "prestamo.prestamo"` crea un modelo y una tabla propios. `_inherit = ["mail.thread"]` añade a ese modelo las capacidades del chatter y el seguimiento de cambios, sin sustituir su identidad.
+2. `tracking=True` registra en el chatter los cambios del campo `state`, indicando el valor anterior, el nuevo valor, el usuario y la fecha.
+
