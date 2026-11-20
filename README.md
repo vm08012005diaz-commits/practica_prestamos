@@ -40,3 +40,9 @@ Las respuestas de cada paso se documentan en este archivo conforme avanza la pr�
 1. Al arrastrar una tarjeta a otra columna, Odoo escribe en el campo `estado` el valor del nuevo grupo porque el kanban está agrupado por ese campo. Ese cambio directo no ejecuta los botones del flujo; por eso no debe usarse para sustituir las acciones **Prestar** y **Devolver**, que contienen validaciones y sincronizan los equipos.
 2. No se crea una columna nueva en `res_partner`. Un `One2many` es una relación inversa virtual: utiliza la columna `partner_id` que ya existe en la tabla de `prestamo.prestamo` para encontrar los préstamos del contacto.
 
+## Reto
+
+### 1. Marcar atrasado
+
+Agregué el botón **Marcar atrasado**, visible solamente cuando el préstamo está Prestado. Antes de cambiar el estado comparo la fecha de devolución con la fecha actual mediante `fields.Date.context_today(self)`. Si la fecha todavía no ha pasado, muestro un `UserError`; si ya pasó, cambio el estado a Atrasado y dejo constancia en el chatter.
+
