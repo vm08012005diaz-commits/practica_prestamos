@@ -4,41 +4,41 @@
 **Asignatura:** Programación de Negocios  
 **Versión objetivo:** Odoo 20.0
 
-Este repositorio contiene el módulo `prestamo_unicah`, desarrollado paso a paso según la guía práctica, junto con las respuestas y las cuatro mejoras del reto.
+En este repositorio desarrollé el módulo `prestamo_unicah` paso a paso según la guía práctica. También incluí mis respuestas y las cuatro mejoras del reto.
 
 ## Respuestas
 
-Las respuestas de cada paso se documentan en este archivo conforme avanza la práctica.
+Estas son mis respuestas a las preguntas de cada paso.
 
 ### Paso 1. Catálogo de equipos
 
-1. Al desmarcar **Activo**, el registro se archiva: sigue en la base de datos, pero las vistas normales lo ocultan mediante el filtro implícito de registros activos. Es mejor que borrarlo porque conserva el historial y las relaciones del equipo.
-2. `copy=False` evita que el código de inventario se copie al duplicar un equipo. Así, el nuevo registro no hereda un identificador que debe ser único para cada activo.
+1. Cuando desmarco **Activo**, el registro se archiva. El equipo sigue en la base de datos, pero las vistas normales lo ocultan mediante el filtro de registros activos. Considero que es mejor archivarlo que borrarlo porque así conservo su historial y sus relaciones.
+2. Entiendo que `copy=False` evita que el código de inventario se copie cuando duplico un equipo. De esta forma, el registro nuevo no hereda un identificador que debe ser único para cada activo.
 
 ### Paso 2. Registro de préstamos
 
-1. `_name = "prestamo.prestamo"` crea un modelo y una tabla propios. `_inherit = ["mail.thread"]` añade a ese modelo las capacidades del chatter y el seguimiento de cambios, sin sustituir su identidad.
-2. `tracking=True` registra en el chatter los cambios del campo `state`, indicando el valor anterior, el nuevo valor, el usuario y la fecha.
+1. Con `_name = "prestamo.prestamo"` creo un modelo y una tabla propios. Con `_inherit = ["mail.thread"]` le agrego al modelo las funciones del chatter y el seguimiento de cambios sin cambiar su identidad.
+2. Al usar `tracking=True`, hago que los cambios del campo `state` queden registrados en el chatter, incluyendo el valor anterior, el valor nuevo, el usuario y la fecha.
 
 ### Paso 3. Equipos del préstamo
 
-1. En `fields.One2many("prestamo.linea", "prestamo_id")`, el primer parámetro es el modelo relacionado y el segundo es el campo `Many2one` de ese modelo que apunta al préstamo actual.
-2. Al borrar un préstamo se borran también sus líneas. Lo define `ondelete="cascade"` en el campo `prestamo_id` de `prestamo.linea`.
+1. En `fields.One2many("prestamo.linea", "prestamo_id")`, identifico que el primer parámetro es el modelo relacionado y el segundo es el campo `Many2one` que apunta al préstamo actual.
+2. Cuando borro un préstamo, también se borran sus líneas. Este comportamiento lo definí con `ondelete="cascade"` en el campo `prestamo_id` de `prestamo.linea`.
 
 ### Paso 4. Flujo de estados
 
-1. La visibilidad de un botón es solo una regla de interfaz y puede evitarse mediante RPC, automatizaciones o llamadas directas al método. La validación del servidor protege la integridad de los datos sin importar desde dónde se invoque la acción.
-2. `prestamo.linea_ids.equipo_id.write(...)` encadena conjuntos de registros: obtiene todas las líneas, mapea sus `equipo_id` y ejecuta una escritura por lote sobre el recordset resultante. Por eso no hace falta un `for` por equipo.
+1. Aunque oculto los botones según el estado, comprendo que esa es solamente una regla de interfaz y que una llamada RPC, una automatización o una llamada directa todavía podría ejecutar el método. Por eso vuelvo a validar el estado en el servidor y protejo los datos sin importar desde dónde se llame la acción.
+2. Con `prestamo.linea_ids.equipo_id.write(...)` obtengo todas las líneas, llego a sus equipos y hago una escritura por lote sobre el recordset resultante. Por eso no necesito escribir un `for` para cada equipo.
 
 ### Paso 5. Reglas del préstamo
 
-1. El dominio de `equipo_id` mejora la selección en la interfaz, pero no es una barrera de integridad: el estado puede cambiar después de elegir el equipo o el dato puede llegar por importación, API o código. El TODO 5 vuelve a comprobar el estado justo antes de prestar.
-2. Un método con `@api.constrains` se ejecuta al crear o escribir un registro cuando cambia alguno de los campos declarados, y bloquea el guardado si lanza `ValidationError`. La validación de `action_prestar` se ejecuta únicamente al invocar esa acción, justo antes del cambio de estado y de los equipos.
+1. El dominio de `equipo_id` me ayuda a mostrar solamente equipos disponibles, pero no garantiza la integridad porque el estado puede cambiar después de elegirlos o los datos pueden llegar por importación, API o código. Por eso en el TODO 5 vuelvo a comprobar el estado justo antes de prestar.
+2. Entiendo que un método con `@api.constrains` se ejecuta al crear o modificar un registro cuando cambia alguno de los campos indicados y bloquea el guardado si lanza `ValidationError`. En cambio, mi validación de `action_prestar` se ejecuta únicamente cuando presiono **Prestar**, justo antes de cambiar los estados.
 
 ### Paso 6. Contacto, kanban y búsqueda
 
-1. Al arrastrar una tarjeta a otra columna, Odoo escribe en el campo `estado` el valor del nuevo grupo porque el kanban está agrupado por ese campo. Ese cambio directo no ejecuta los botones del flujo; por eso no debe usarse para sustituir las acciones **Prestar** y **Devolver**, que contienen validaciones y sincronizan los equipos.
-2. No se crea una columna nueva en `res_partner`. Un `One2many` es una relación inversa virtual: utiliza la columna `partner_id` que ya existe en la tabla de `prestamo.prestamo` para encontrar los préstamos del contacto.
+1. Cuando arrastro una tarjeta a otra columna, Odoo escribe en `estado` el valor del nuevo grupo porque el kanban está agrupado por ese campo. Este cambio directo no ejecuta los botones del flujo, así que no debo usarlo para sustituir **Prestar** o **Devolver**, ya que esas acciones validan y sincronizan los equipos.
+2. Al agregar `prestamo_ids` a `res.partner`, no creo una columna nueva en la tabla de contactos. El `One2many` es una relación inversa virtual que usa la columna `partner_id` de `prestamo.prestamo` para encontrar los préstamos de cada contacto.
 
 ## Reto
 
