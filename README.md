@@ -50,3 +50,7 @@ Agregué el botón **Marcar atrasado**, visible solamente cuando el préstamo es
 
 Agregué `decoration-danger` para mostrar en rojo los préstamos Atrasados y `decoration-muted` para mostrar en gris los Devueltos. Las expresiones dependen directamente del campo `state` de cada fila.
 
+### 3. Veces prestado
+
+Creé el campo calculado `veces_prestado` en el equipo. Para cada equipo cuento con `search_count` cuántas líneas de préstamo tienen su `equipo_id`. Muestro el resultado tanto en el formulario como en la tarjeta del kanban.
+

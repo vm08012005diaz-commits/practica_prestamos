@@ -23,6 +23,7 @@
                         <div class="fw-bold"><field name="name"/></div>
                         <div><field name="codigo"/></div>
                         <div><field name="categoria"/></div>
+                        <div>Veces prestado: <field name="veces_prestado"/></div>
                     </t>
                 </templates>
             </kanban>
@@ -44,6 +45,7 @@
                             <field name="categoria"/>
                             <field name="estado"/>
                             <field name="active"/>
+                            <field name="veces_prestado"/>
                         </group>
                     </group>
                     <field name="notas" placeholder="Accesorios, estado físico..."/>
