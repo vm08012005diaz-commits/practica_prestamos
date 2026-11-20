@@ -30,3 +30,8 @@ Las respuestas de cada paso se documentan en este archivo conforme avanza la pr�
 1. La visibilidad de un botón es solo una regla de interfaz y puede evitarse mediante RPC, automatizaciones o llamadas directas al método. La validación del servidor protege la integridad de los datos sin importar desde dónde se invoque la acción.
 2. `prestamo.linea_ids.equipo_id.write(...)` encadena conjuntos de registros: obtiene todas las líneas, mapea sus `equipo_id` y ejecuta una escritura por lote sobre el recordset resultante. Por eso no hace falta un `for` por equipo.
 
+### Paso 5. Reglas del préstamo
+
+1. El dominio de `equipo_id` mejora la selección en la interfaz, pero no es una barrera de integridad: el estado puede cambiar después de elegir el equipo o el dato puede llegar por importación, API o código. El TODO 5 vuelve a comprobar el estado justo antes de prestar.
+2. Un método con `@api.constrains` se ejecuta al crear o escribir un registro cuando cambia alguno de los campos declarados, y bloquea el guardado si lanza `ValidationError`. La validación de `action_prestar` se ejecuta únicamente al invocar esa acción, justo antes del cambio de estado y de los equipos.
+
