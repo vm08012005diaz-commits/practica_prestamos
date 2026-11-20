@@ -54,3 +54,7 @@ Agregué `decoration-danger` para mostrar en rojo los préstamos Atrasados y `de
 
 Creé el campo calculado `veces_prestado` en el equipo. Para cada equipo cuento con `search_count` cuántas líneas de préstamo tienen su `equipo_id`. Muestro el resultado tanto en el formulario como en la tarjeta del kanban.
 
+### 4. Mantenimiento
+
+Agregué los botones **Enviar a mantenimiento** y **Marcar disponible** en el formulario del equipo. Cada botón aparece solamente en el estado correspondiente. Además, valido en el servidor que un equipo Prestado no pueda enviarse a mantenimiento y que solo uno que esté En mantenimiento pueda volver a Disponible.
+
