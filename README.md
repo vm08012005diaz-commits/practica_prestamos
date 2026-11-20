@@ -32,7 +32,7 @@ Estas son mis respuestas a las preguntas de cada paso.
 
 ### Paso 5. Reglas del préstamo
 
-1. El dominio de `equipo_id` me ayuda a mostrar solamente equipos disponibles, pero no garantiza la integridad porque el estado puede cambiar después de elegirlos o los datos pueden llegar por importación, API o código. Por eso en el TODO 5 vuelvo a comprobar el estado justo antes de prestar.
+1. El dominio de `equipo_id` me ayuda a mostrar solamente equipos disponibles, pero no garantiza la integridad porque el estado puede cambiar después de elegirlos o los datos pueden llegar por importación, API o código. Por eso vuelvo a comprobar el estado justo antes de prestar.
 2. Entiendo que un método con `@api.constrains` se ejecuta al crear o modificar un registro cuando cambia alguno de los campos indicados y bloquea el guardado si lanza `ValidationError`. En cambio, mi validación de `action_prestar` se ejecuta únicamente cuando presiono **Prestar**, justo antes de cambiar los estados.
 
 ### Paso 6. Contacto, kanban y búsqueda
@@ -57,4 +57,11 @@ Creé el campo calculado `veces_prestado` en el equipo. Para cada equipo cuento 
 ### 4. Mantenimiento
 
 Agregué los botones **Enviar a mantenimiento** y **Marcar disponible** en el formulario del equipo. Cada botón aparece solamente en el estado correspondiente. Además, valido en el servidor que un equipo Prestado no pueda enviarse a mantenimiento y que solo uno que esté En mantenimiento pueda volver a Disponible.
+
+## Instalación y comprobación
+
+1. Agrego la carpeta `practica_prestamos` al `addons_path` de `odoo.conf`.
+2. Instalo el módulo con `python odoo-bin -c odoo.conf -i prestamo_unicah`.
+3. Para cargar cambios posteriores uso `python odoo-bin -c odoo.conf -u prestamo_unicah`.
+4. Compruebo desde la interfaz los casos válidos y los errores solicitados en la guía: fechas invertidas, préstamo estudiantil de más de 7 días, equipo repetido, más de 2 equipos para un estudiante y equipo que deja de estar disponible antes de prestar.
 
