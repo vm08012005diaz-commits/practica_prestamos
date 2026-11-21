@@ -1,4 +1,4 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_equipo_usuario,equipo usuario,model_prestamo_equipo,base.group_user,1,1,1,1
-access_prestamo_usuario,prestamo usuario,model_prestamo_prestamo,base.group_user,1,1,1,1
-access_linea_usuario,linea usuario,model_prestamo_linea,base.group_user,1,1,1,1
+id,name,model_id,group_id/id,operation,domain
+access_equipo_usuario,equipo usuario,prestamo.equipo,base.group_user,crud,
+access_prestamo_usuario,prestamo usuario,prestamo.prestamo,base.group_user,crud,
+access_linea_usuario,linea usuario,prestamo.linea,base.group_user,crud,
